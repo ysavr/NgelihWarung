@@ -34,7 +34,7 @@
 
             <info.hoang8f.widget.FButton
                 android:id="@+id/btn_select"
-                android:text="SELECT"
+                android:text="Chose Image"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 
             <info.hoang8f.widget.FButton
                 android:id="@+id/btn_upload"
-                android:text="UPLOAD"
+                android:text="Upload"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
