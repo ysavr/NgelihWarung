@@ -1,6 +1,5 @@
 package com.mythcon.savr.ngelihwarung.ViewHolder;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
@@ -11,27 +10,24 @@ import com.mythcon.savr.ngelihwarung.Interface.ItemClickListener;
 import com.mythcon.savr.ngelihwarung.R;
 
 /**
- * Created by SAVR on 12/03/2018.
- * menampilkan list menu
- * melakukan update dan delete category pada Home.java
+ * Created by SAVR on 13/03/2018.
  */
 
-public class MenuViewHolder extends RecyclerView.ViewHolder implements
-        View.OnClickListener,View.OnCreateContextMenuListener {
-
-    public TextView textMenuName;
-    public ImageView imageView;
+public class FoodViewHolder extends RecyclerView.ViewHolder implements
+        View.OnClickListener, View.OnCreateContextMenuListener{
+    public TextView textFoodName;
+    public ImageView foodImage;
 
     private ItemClickListener itemClickListener;
 
-    public MenuViewHolder(View itemView) {
+    public FoodViewHolder(View itemView) {
         super(itemView);
 
-        textMenuName = itemView.findViewById(R.id.menu_name);
-        imageView = itemView.findViewById(R.id.menu_image);
+        textFoodName = itemView.findViewById(R.id.food_name);
+        foodImage = itemView.findViewById(R.id.food_image);
 
         itemView.setOnClickListener(this);
-        itemView.setOnCreateContextMenuListener(this); //menampilkan context menu update dan delete long klik recyclerview
+        itemView.setOnCreateContextMenuListener(this);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){
