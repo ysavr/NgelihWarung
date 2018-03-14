@@ -52,7 +52,6 @@ public class FoodList extends AppCompatActivity {
     RecyclerView recycler_view;
     RecyclerView.LayoutManager layoutManager;
 
-
     String categoryId = "";
 
     FirebaseRecyclerAdapter<Food,FoodViewHolder> adapter;   //(Model Class yg akan digunakan, nama holder )
