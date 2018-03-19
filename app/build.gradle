@@ -21,6 +21,8 @@ android {
 
 dependencies {
     implementation 'com.android.support:design:26.+'
+    implementation 'com.google.android.gms:play-services-maps:11.0.2'
+    implementation 'com.google.android.gms:play-services:11.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.+'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -37,5 +39,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jaredrummler:material-spinner:1.1.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
