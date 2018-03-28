@@ -13,7 +13,7 @@ import com.mythcon.savr.ngelihwarung.R;
  */
 
 public class OrderViewHOlder extends RecyclerView.ViewHolder implements
-        View.OnClickListener,View.OnLongClickListener,
+        View.OnClickListener,
         View.OnCreateContextMenuListener {
     public TextView txtOrderId, txtOrderStatus, txtOrderAddress, txtOrderPhone;
 
@@ -28,7 +28,6 @@ public class OrderViewHOlder extends RecyclerView.ViewHolder implements
         txtOrderPhone = itemView.findViewById(R.id.order_phone);
 
         itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
         itemView.setOnCreateContextMenuListener(this);
     }
 
@@ -46,11 +45,5 @@ public class OrderViewHOlder extends RecyclerView.ViewHolder implements
         menu.setHeaderTitle("Select the action");
         menu.add(0,0,getAdapterPosition(),"Update");
         menu.add(0,1,getAdapterPosition(),"Delete");
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        itemClickListener.onclick(v,getAdapterPosition(),true);
-        return true;
     }
 }

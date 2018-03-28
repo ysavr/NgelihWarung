@@ -7,6 +7,8 @@ import android.graphics.Paint;
 
 import com.mythcon.savr.ngelihwarung.Model.Request;
 import com.mythcon.savr.ngelihwarung.Model.User;
+import com.mythcon.savr.ngelihwarung.Remote.APIService;
+import com.mythcon.savr.ngelihwarung.Remote.FCMRetrofitClient;
 import com.mythcon.savr.ngelihwarung.Remote.GeoCordinates;
 import com.mythcon.savr.ngelihwarung.Remote.RetrofitClient;
 
@@ -15,6 +17,9 @@ import com.mythcon.savr.ngelihwarung.Remote.RetrofitClient;
  */
 
 public class Common {
+    private static final String FCM_URL = "https://fcm.googleapis.com/";
+    public static final String baseUrl = "https://maps.googleapis.com";
+
     public static User currentUser;
     public static Request currentRequest;
 
@@ -23,8 +28,6 @@ public class Common {
 
     public static final int PICT_IMAGE_REQUEST = 71;
 
-    public static final String baseUrl = "https://maps.googleapis.com";
-
     public static String convertCodeToStatus(String code){
         if (code.equals("0"))
             return "Placed";
@@ -32,6 +35,10 @@ public class Common {
             return "On my way";
         else
             return "Shipped";
+    }
+
+    public static APIService getFCMService(){
+        return FCMRetrofitClient.getClient(FCM_URL).create(APIService.class);
     }
 
     public static GeoCordinates getGeoCodeService(){

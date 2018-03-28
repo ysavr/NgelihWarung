@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.mythcon.savr.ngelihwarung.Common.Common;
 import com.mythcon.savr.ngelihwarung.Interface.ItemClickListener;
 import com.mythcon.savr.ngelihwarung.Model.Category;
+import com.mythcon.savr.ngelihwarung.Model.Token;
 import com.mythcon.savr.ngelihwarung.Service.ListenOrder;
 import com.mythcon.savr.ngelihwarung.ViewHolder.MenuViewHolder;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -112,9 +114,20 @@ public class Home extends AppCompatActivity
         recycler_menu.setLayoutManager(layoutManager);
 
         loadMenu();
-
+        /*
         Intent service = new Intent(Home.this, ListenOrder.class);
         startService(service);
+        */
+
+        //Update Token Ketika Login
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    private void updateToken(String token) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference tokens = db.getReference("Tokens");
+        Token dataToken = new Token(token,true);  //true karena token ini dikirim dari Server
+        tokens.child(Common.currentUser.getPhone()).setValue(dataToken);
     }
 
     private void showDialog() {
