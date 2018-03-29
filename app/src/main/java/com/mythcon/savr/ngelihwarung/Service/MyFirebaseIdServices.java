@@ -20,9 +20,11 @@ public class MyFirebaseIdServices extends FirebaseInstanceIdService {
     }
 
     private void updateToServer(String tokenRefreshed) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference tokens = db.getReference("Tokens");
-        Token token = new Token(tokenRefreshed,true);  //true karena token ini dikirim dari Server
-        tokens.child(Common.currentUser.getPhone()).setValue(token);
+        if (Common.currentUser != null) {
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference tokens = db.getReference("Tokens");
+            Token token = new Token(tokenRefreshed, true);  //true karena token ini dikirim dari Server
+            tokens.child(Common.currentUser.getPhone()).setValue(token);
+        }
     }
 }

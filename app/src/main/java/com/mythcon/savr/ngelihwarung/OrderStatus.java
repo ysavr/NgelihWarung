@@ -34,9 +34,6 @@ import com.mythcon.savr.ngelihwarung.ViewHolder.OrderViewHOlder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-/*
-* method "onContextItemSelected" digunakan untuk memilih update atau delete saat longclick
-*/
 
 public class OrderStatus extends AppCompatActivity {
     RecyclerView recycler_view;
@@ -76,28 +73,42 @@ public class OrderStatus extends AppCompatActivity {
                 requests)
         {
             @Override
-            protected void populateViewHolder(OrderViewHOlder viewHolder, final Request model, int position) {
+            protected void populateViewHolder(final OrderViewHOlder viewHolder, final Request model, final int position) {
                 viewHolder.txtOrderId.setText(adapter.getRef(position).getKey());
                 viewHolder.txtOrderStatus.setText(Common.convertCodeToStatus(model.getStatus()));
                 viewHolder.txtOrderPhone.setText(model.getPhone());
                 viewHolder.txtOrderAddress.setText(model.getAddress());
 
-                //Long klik pada order Status
-                viewHolder.setItemClickListener(new ItemClickListener() {
+                viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onclick(View view, int position, boolean isLongClick) {
-                        if (!isLongClick){
-                            Intent trackingOrder = new Intent(OrderStatus.this,TrackingOrder.class);
-                            Common.currentRequest = model;
-                            startActivity(trackingOrder);
-                        }
-                        /*   else {
-                            Intent orderDetail = new Intent(OrderStatus.this,OrderDetail.class);
-                            Common.currentRequest = model;
-                            orderDetail.putExtra("OrderId",adapter.getRef(position).getKey());
-                            startActivity(orderDetail);
-                        }
-                        */
+                    public void onClick(View v) {
+                        showUpdateDialog(adapter.getRef(position).getKey(),adapter.getItem(position));
+                    }
+                });
+
+                viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteDialog(adapter.getRef(position).getKey());
+                    }
+                });
+
+                viewHolder.btnDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent orderDetail = new Intent(OrderStatus.this,OrderDetail.class);
+                        Common.currentRequest = model;
+                        orderDetail.putExtra("OrderId",adapter.getRef(position).getKey());
+                        startActivity(orderDetail);
+                    }
+                });
+
+                viewHolder.btnDirection.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent trackingOrder = new Intent(OrderStatus.this,TrackingOrder.class);
+                        Common.currentRequest = model;
+                        startActivity(trackingOrder);
                     }
                 });
             }
@@ -106,20 +117,9 @@ public class OrderStatus extends AppCompatActivity {
         recycler_view.setAdapter(adapter);
     }
 
-    @Override   // longklik untuk menampilkan Dialog Update atau Delete
-    public boolean onContextItemSelected(MenuItem item) {
-        if (item.getTitle().equals(Common.UPDATE))
-        {
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
-        }
-        else if (item.getTitle().equals(Common.DELETE)) {
-            deleteDialog(adapter.getRef(item.getOrder()).getKey());
-        }
-        return super.onContextItemSelected(item);
-    }
-
     private void deleteDialog(String key) {
         requests.child(key).removeValue();
+        adapter.notifyDataSetChanged();
     }
 
     private void showUpdateDialog(final String key, final Request item) {
@@ -143,6 +143,8 @@ public class OrderStatus extends AppCompatActivity {
                 dialog.dismiss();
                 item.setStatus(String.valueOf(spinner.getSelectedIndex()));
                 requests.child(localKey).setValue(item);
+
+                adapter.notifyDataSetChanged();
 
                 sendOrderStatusToUser(localKey,item);
             }
@@ -187,7 +189,6 @@ public class OrderStatus extends AppCompatActivity {
                                             Log.e("Error ",t.getMessage());
                                         }
                                     });
-
                         }
                     }
 
